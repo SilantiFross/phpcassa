@@ -4,8 +4,8 @@ use phpcassa\SystemManager;
 use phpcassa\Schema\StrategyClass;
 use phpcassa\Schema\DataType;
 
-use cassandra\InvalidRequestException;
-use cassandra\IndexType;
+use cassa_cassandra\InvalidRequestException;
+use cassa_cassandra\IndexType;
 
 class SystemManagerTest extends PHPUnit_Framework_TestCase {
 

@@ -6,7 +6,7 @@ use phpcassa\SystemManager;
 use phpcassa\SuperColumnFamily;
 use phpcassa\Schema\DataType;
 
-use cassandra\NotFoundException;
+use cassa_cassandra\NotFoundException;
 
 class TestSuperColumnFamily extends PHPUnit_Framework_TestCase {
 

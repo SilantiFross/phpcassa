@@ -5,7 +5,7 @@ use phpcassa\SystemManager;
 use phpcassa\ColumnFamily;
 use phpcassa\Schema\DataType;
 
-use cassandra\NotFoundException;
+use cassa_cassandra\NotFoundException;
 
 class TestCounterColumnFamily extends PHPUnit_Framework_TestCase {
 

@@ -32,3 +32,6 @@ ext/thrift_protocol/modules/
 ext/thrift_protocol/php_thrift_protocol.lo
 ext/thrift_protocol/run-tests.php
 ext/thrift_protocol/thrift_protocol.la
+vendor
+.idea
+composer.lock

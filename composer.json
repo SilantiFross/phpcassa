@@ -1,5 +1,5 @@
 {
-    "name": "thobbs/phpcassa",
+    "name": "silantifross/phpcassa",
     "description": "PHP Cassandra Library",
     "keywords": ["Cassandra"],
     "type": "library",
@@ -9,10 +9,14 @@
         {
             "name": "Tyler Hobbs",
             "homepage": "https://github.com/thobbs/phpcassa"
+        },
+        {
+            "name": "Silantsi Rudnitski",
+            "homepage": "https://github.com/silantifross/phpcassa"
         }
     ],
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=8.1"
     },
     "suggest": {
         "ext-thrift_protocol": "Enabling the thrift protocol extension is crucial for phpcassa's performance"

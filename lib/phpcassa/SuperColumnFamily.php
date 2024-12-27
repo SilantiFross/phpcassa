@@ -4,14 +4,14 @@ namespace phpcassa;
 use phpcassa\ColumnFamily;
 use phpcassa\ColumnSlice;
 
-use cassandra\Deletion;
-use cassandra\ColumnParent;
-use cassandra\ColumnPath;
-use cassandra\CounterColumn;
-use cassandra\CounterSuperColumn;
-use cassandra\ColumnOrSuperColumn;
-use cassandra\Column;
-use cassandra\SuperColumn;
+use cassa_cassandra\Deletion;
+use cassa_cassandra\ColumnParent;
+use cassa_cassandra\ColumnPath;
+use cassa_cassandra\CounterColumn;
+use cassa_cassandra\CounterSuperColumn;
+use cassa_cassandra\ColumnOrSuperColumn;
+use cassa_cassandra\Column;
+use cassa_cassandra\SuperColumn;
 
 /**
  * Representation of a super column family in Cassandra.

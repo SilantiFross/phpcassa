@@ -4,13 +4,9 @@ namespace phpcassa\Connection;
 use Thrift\Exception\TException;
 use Thrift\Exception\TTransportException;
 
-use phpcassa\Connection\ConnectionWrapper;
-use phpcassa\Connection\MaxRetriesException;
-use phpcassa\Connection\NoServerAvailable;
-
-use cassandra\TimedOutException;
-use cassandra\NotFoundException;
-use cassandra\UnavailableException;
+use cassa_cassandra\TimedOutException;
+use cassa_cassandra\NotFoundException;
+use cassa_cassandra\UnavailableException;
 
 /**
  * A pool of connections to a set of servers in a cluster.

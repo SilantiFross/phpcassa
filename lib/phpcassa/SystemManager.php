@@ -4,10 +4,10 @@ namespace phpcassa;
 use phpcassa\Connection\ConnectionWrapper;
 use phpcassa\Schema\DataType;
 
-use cassandra\KsDef;
-use cassandra\CfDef;
-use cassandra\ColumnDef;
-use cassandra\IndexType;
+use cassa_cassandra\KsDef;
+use cassa_cassandra\CfDef;
+use cassa_cassandra\ColumnDef;
+use cassa_cassandra\IndexType;
 
 /**
  * Helps with getting information about the schema, making

@@ -1,10 +1,8 @@
 <?php
 namespace phpcassa;
 
-use phpcassa\ColumnSlice;
 use phpcassa\Schema\DataType;
 use phpcassa\Schema\DataType\BytesType;
-use phpcassa\Schema\DataType\CompositeType;
 use phpcassa\Schema\DataType\Serialized;
 
 use phpcassa\Iterator\IndexedColumnFamilyIterator;
@@ -15,21 +13,21 @@ use phpcassa\Batch\CfMutator;
 
 use phpcassa\Util\Clock;
 
-use cassandra\InvalidRequestException;
-use cassandra\NotFoundException;
+use cassa_cassandra\InvalidRequestException;
+use cassa_cassandra\NotFoundException;
 
-use cassandra\Mutation;
-use cassandra\Deletion;
-use cassandra\ConsistencyLevel;
-use cassandra\Column;
-use cassandra\ColumnParent;
-use cassandra\ColumnPath;
-use cassandra\ColumnOrSuperColumn;
-use cassandra\CounterColumn;
-use cassandra\IndexClause;
-use cassandra\IndexExpression;
-use cassandra\SlicePredicate;
-use cassandra\SliceRange;
+use cassa_cassandra\Mutation;
+use cassa_cassandra\Deletion;
+use cassa_cassandra\ConsistencyLevel;
+use cassa_cassandra\Column;
+use cassa_cassandra\ColumnParent;
+use cassa_cassandra\ColumnPath;
+use cassa_cassandra\ColumnOrSuperColumn;
+use cassa_cassandra\CounterColumn;
+use cassa_cassandra\IndexClause;
+use cassa_cassandra\IndexExpression;
+use cassa_cassandra\SlicePredicate;
+use cassa_cassandra\SliceRange;
 
 /**
  * Functions and constants used both in ColumnFamily and SuperColumnFamily
@@ -535,9 +533,7 @@ abstract class AbstractColumnFamily {
         if ($buffsz == null)
             $buffsz = $this->buffer_size;
         if ($buffsz < 2) {
-            $ire = new InvalidRequestException();
-            $ire->message = 'buffer_size cannot be less than 2';
-            throw $ire;
+			throw new InvalidRequestException(['message' => 'buffer_size cannot be less than 2']);
         }
 
         return new RangeColumnFamilyIterator($this, $buffsz, $start, $finish,
@@ -598,9 +594,7 @@ abstract class AbstractColumnFamily {
         if ($buffsz == null)
             $buffsz = $this->buffer_size;
         if ($buffsz < 2) {
-            $ire = new InvalidRequestException();
-            $ire->message = 'buffer_size cannot be less than 2';
-            throw $ire;
+			throw new InvalidRequestException(['message' => 'buffer_size cannot be less than 2']);
         }
 
         return new RangeTokenColumnFamilyIterator($this, $buffsz, $tokenstart, $tokenfinish,
@@ -632,9 +626,7 @@ abstract class AbstractColumnFamily {
         if ($buffer_size == null)
             $buffer_size = $this->buffer_size;
         if ($buffer_size < 2) {
-            $ire = new InvalidRequestException();
-            $ire->message = 'buffer_size cannot be less than 2';
-            throw $ire;
+			throw new InvalidRequestException(['message' => 'buffer_size cannot be less than 2']);
         }
 
         $new_clause = new IndexClause();

@@ -3,9 +3,9 @@
 namespace phpcassa\Batch;
 
 use phpcassa\Util\Clock;
-use cassandra\Deletion;
-use cassandra\Mutation;
-use cassandra\SlicePredicate;
+use cassa_cassandra\Deletion;
+use cassa_cassandra\Mutation;
+use cassa_cassandra\SlicePredicate;
 
 /**
  * Common methods shared by CfMutator and Mutator classes

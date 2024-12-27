@@ -1,7 +1,7 @@
 <?php
 namespace phpcassa\Batch;
 
-use cassandra\ConsistencyLevel;
+use cassa_cassandra\ConsistencyLevel;
 
 /**
  * Allows you to group multiple mutations across one or more

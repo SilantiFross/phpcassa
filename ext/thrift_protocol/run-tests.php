@@ -71,15 +71,6 @@ if (!defined("PHP_VERSION_ID")) {
 	define("PHP_MAJOR_VERSION", $major);
 }
 
-// __DIR__ is available from 5.3.0
-if (PHP_VERSION_ID < 50300) {
-	define('__DIR__', realpath(dirname(__FILE__)));
-	// FILE_BINARY is available from 5.2.7
-	if (PHP_VERSION_ID < 50207) {
-		define('FILE_BINARY', 0);
-	}
-}
-
 // If timezone is not set, use UTC.
 if (ini_get('date.timezone') == '') {
 	date_default_timezone_set('UTC');
@@ -114,7 +105,6 @@ if (ob_get_level()) echo "Not all buffers were deleted.\n";
 
 error_reporting(E_ALL);
 if (PHP_MAJOR_VERSION < 6) {
-	ini_set('magic_quotes_runtime',0); // this would break tests by modifying EXPECT sections
 	if (ini_get('safe_mode')) {
 		echo <<< SAFE_MODE_WARNING
 
@@ -254,7 +244,6 @@ $ini_overwrites = array(
 		'error_append_string=',
 		'auto_prepend_file=',
 		'auto_append_file=',
-		'magic_quotes_runtime=0',
 		'ignore_repeated_errors=0',
 		'precision=14',
 		'unicode.runtime_encoding=ISO-8859-1',
@@ -384,8 +373,8 @@ function save_or_mail_results()
 			if ($sum_results['FAILED']) {
 				foreach ($PHP_FAILED_TESTS['FAILED'] as $test_info) {
 					$failed_tests_data .= $sep . $test_info['name'] . $test_info['info'];
-					$failed_tests_data .= $sep . file_get_contents(realpath($test_info['output']), FILE_BINARY);
-					$failed_tests_data .= $sep . file_get_contents(realpath($test_info['diff']), FILE_BINARY);
+					$failed_tests_data .= $sep . file_get_contents(realpath($test_info['output']), 0);
+					$failed_tests_data .= $sep . file_get_contents(realpath($test_info['diff']), 0);
 					$failed_tests_data .= $sep . "\n\n";
 				}
 				$status = "failed";
@@ -1035,12 +1024,12 @@ function save_text($filename, $text, $filename_copy = null)
 	global $DETAILED;
 
 	if ($filename_copy && $filename_copy != $filename) {
-		if (file_put_contents($filename_copy, $text, FILE_BINARY) === false) {
+		if (file_put_contents($filename_copy, $text, 0) === false) {
 			error("Cannot open file '" . $filename_copy . "' (save_text)");
 		}
 	}
 
-	if (file_put_contents($filename, $text, FILE_BINARY) === false) {
+	if (file_put_contents($filename, $text, 0) === false) {
 		error("Cannot open file '" . $filename . "' (save_text)");
 	}
 
@@ -1301,7 +1290,7 @@ TEST $file
 				$section_text['FILE_EXTERNAL'] = dirname($file) . '/' . trim(str_replace('..', '', $section_text['FILE_EXTERNAL']));
 
 				if (file_exists($section_text['FILE_EXTERNAL'])) {
-					$section_text['FILE'] = file_get_contents($section_text['FILE_EXTERNAL'], FILE_BINARY);
+					$section_text['FILE'] = file_get_contents($section_text['FILE_EXTERNAL'], 0);
 					unset($section_text['FILE_EXTERNAL']);
 				} else {
 					$bork_info = "could not load --FILE_EXTERNAL-- " . dirname($file) . '/' . trim($section_text['FILE_EXTERNAL']);
@@ -2047,12 +2036,12 @@ COMMAND $cmd
 	if (!$passed) {
 
 		// write .exp
-		if (strpos($log_format, 'E') !== false && file_put_contents($exp_filename, $wanted, FILE_BINARY) === false) {
+		if (strpos($log_format, 'E') !== false && file_put_contents($exp_filename, $wanted, 0) === false) {
 			error("Cannot create expected test output - $exp_filename");
 		}
 
 		// write .out
-		if (strpos($log_format, 'O') !== false && file_put_contents($output_filename, $output, FILE_BINARY) === false) {
+		if (strpos($log_format, 'O') !== false && file_put_contents($output_filename, $output, 0) === false) {
 			error("Cannot create test output - $output_filename");
 		}
 
@@ -2062,7 +2051,7 @@ COMMAND $cmd
 			$diff = "# original source file: $shortname\n" . $diff;
 		}
 		show_file_block('diff', $diff);
-		if (strpos($log_format, 'D') !== false && file_put_contents($diff_filename, $diff, FILE_BINARY) === false) {
+		if (strpos($log_format, 'D') !== false && file_put_contents($diff_filename, $diff, 0) === false) {
 			error("Cannot create test diff - $diff_filename");
 		}
 
@@ -2070,7 +2059,7 @@ COMMAND $cmd
 		if (strpos($log_format, 'S') !== false && file_put_contents($sh_filename, "#!/bin/sh
 
 {$cmd}
-", FILE_BINARY) === false) {
+", 0) === false) {
 			error("Cannot create test shell script - $sh_filename");
 		}
 		chmod($sh_filename, 0755);
@@ -2082,7 +2071,7 @@ $wanted
 ---- ACTUAL OUTPUT
 $output
 ---- FAILED
-", FILE_BINARY) === false) {
+", 0) === false) {
 			error("Cannot create test log - $log_filename");
 			error_report($file, $log_filename, $tested);
 		}
@@ -2294,12 +2283,12 @@ function settings2params(&$ini_settings)
 				$settings .= " -d \"$name=$val\"";
 			}
 		} else {
-			if (substr(PHP_OS, 0, 3) == "WIN" && !empty($value) && $value{0} == '"') {
+			if (substr(PHP_OS, 0, 3) == "WIN" && !empty($value) && $value[0] == '"') {
 				$len = strlen($value);
 
-				if ($value{$len - 1} == '"') {
-					$value{0} = "'";
-					$value{$len - 1} = "'";
+				if ($value[$len - 1] == '"') {
+					$value[0] = "'";
+					$value[$len - 1] = "'";
 				}
 			} else {
 				$value = addslashes($value);
@@ -2335,7 +2324,7 @@ function compute_summary()
 	$sum_results['SKIPPED'] += $ignored_by_ext;
 	$percent_results = array();
 
-	while (list($v, $n) = each($sum_results)) {
+	foreach ($sum_results as $v => $n) {
 		$percent_results[$v] = (100.0 * $n) / $n_total;
 	}
 }

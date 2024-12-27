@@ -9,8 +9,7 @@ use phpcassa\SystemManager;
 use phpcassa\Index\IndexExpression;
 use phpcassa\Index\IndexClause;
 
-use cassandra\ConsistencyLevel;
-use cassandra\NotFoundException;
+use cassa_cassandra\ConsistencyLevel;
 
 
 class ColumnFamilyTest extends PHPUnit_Framework_TestCase {
