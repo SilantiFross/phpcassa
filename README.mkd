@@ -1,22 +1,14 @@
 phpcassa
 ========
 
-[![Build Status](https://secure.travis-ci.org/thobbs/phpcassa.png?branch=master)](http://travis-ci.org/thobbs/phpcassa)
-
 phpcassa is a PHP client library for [Apache Cassandra](http://cassandra.apache.org).
 
 * Compatible with Cassandra 0.7 through 1.2
 * Optional C extension for improved performance
 
-phpcassa is compatible with PHP 5.3+
+This fork of phpcassa is compatible with PHP 8.1+
 
 phpcassa is open source under the [MIT license](http://www.opensource.org/licenses/mit-license.php).
-
-Deprecated
-----------
-At this point, **phpcassa has been deprecated and will no longer be supported**.
-
-I suggest using the DataStax PHP driver located here: https://github.com/datastax/php-driver.  It supports CQL, has many excellent features, and is well maintained.
 
 Documentation
 -------------
